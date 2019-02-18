@@ -8,6 +8,7 @@ import { PumpsService } from './pumps-table/pumps.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { EditPumpDialog } from './pumps-table/edit-pump-dialog/edit-pump-dialog';
+import { TestRoutingModule } from './test-routing.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { EditPumpDialog } from './pumps-table/edit-pump-dialog/edit-pump-dialog'
     TranslateModule,
     MatButtonModule,
     MatDialogModule,
+    TestRoutingModule
   ],
   entryComponents: [
     EditPumpDialog
