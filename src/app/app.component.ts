@@ -6,17 +6,16 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    selector   : 'app',
+    selector: 'app',
     templateUrl: './app.component.html',
-    styleUrls  : ['./app.component.scss']
+    styleUrls: ['./app.component.scss']
 })
-export class Lead implements OnInit, OnDestroy
-{
+export class Lead implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -24,20 +23,21 @@ export class Lead implements OnInit, OnDestroy
 
     constructor(
         @Inject(DOCUMENT) private document: any,
-        private _translateService: TranslateService,
+        private translate: TranslateService,
         private _router: Router,
         private _platform: Platform,
         private _http: HttpClient,
         private _snackbar: MatSnackBar
-    )
-    {
+    ) {
         // Add is-mobile class to the body if the platform is mobile
-        if ( this._platform.ANDROID || this._platform.IOS )
-        {
+        if (this._platform.ANDROID || this._platform.IOS) {
             this.document.body.classList.add('is-mobile');
         }
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
+        translate.setDefaultLang('en')
+        translate.use('en')
 
         ///Lead-Test : ROut to your module here!
     }
@@ -49,17 +49,15 @@ export class Lead implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        
+    ngOnInit(): void {
 
-        }
+
+    }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -69,5 +67,5 @@ export class Lead implements OnInit, OnDestroy
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
- 
+
 }

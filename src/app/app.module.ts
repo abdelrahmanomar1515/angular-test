@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatButtonModule, MatIconModule, MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule, MatIconModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import 'hammerjs';
 
 
@@ -15,7 +16,9 @@ import { HttpModule } from '@angular/http';
 import { MatSnackBarModule } from "@angular/material";
 import { ImageCropperModule } from 'ngx-image-cropper';
 
+
 import { AppRoutingModule } from './app-routing.module';
+import { TestModule } from 'areas/lead-test/lib/components/test/test.module';
 
 
 
@@ -23,17 +26,23 @@ import { AppRoutingModule } from './app-routing.module';
     declarations: [
         Lead
     ],
-    imports     : [
+    imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        HttpModule ,
+        HttpModule,
         MatSnackBarModule,
         MatProgressBarModule,
-    MatProgressSpinnerModule,
-//        RouterModule.forRoot(appRoutes),
-   //     AccountModule,
-        TranslateModule.forRoot(),
+        MatProgressSpinnerModule,
+        //        RouterModule.forRoot(appRoutes),
+        //     AccountModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
         ImageCropperModule,
 
         // Material moment date module
@@ -41,21 +50,25 @@ import { AppRoutingModule } from './app-routing.module';
 
         // Material
         MatButtonModule,
-        MatIconModule
-        
-        ,AppRoutingModule //routing module should be at end
-        
-        ],
-    exports:[MatProgressBarModule,
-        MatProgressSpinnerModule],
+        MatIconModule,
+        TestModule
+
+        , AppRoutingModule //routing module should be at end
+
+    ],
+    exports: [MatProgressBarModule,
+        MatProgressSpinnerModule,
+    ],
     providers: [
-            MatProgressBarModule,
+        MatProgressBarModule,
         MatProgressSpinnerModule
-          ],
-    bootstrap   :[
+    ],
+    bootstrap: [
         Lead
     ]
 })
-export class AppModule
-{
+export class AppModule {
+}
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
 }
