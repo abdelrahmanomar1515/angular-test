@@ -1,6 +1,9 @@
 {
-    "table": {
-        "name": "الاسم",
-        "TotalTankCapacity": "سعة الخزان الكاملة"
+    "contacts": {
+        "table": {
+            "FirstName": " الاسم الأول",
+            "PhoneNumber": "رقم التليفون"
+        }
     }
+
 }

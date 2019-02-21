@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
+import { Component, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Contact } from '../../Models/contact';
 import { ContactsService } from './contacts.service';
-import { Subscription } from 'rxjs';
-import { MatPaginator, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
+import { Subscription, merge } from 'rxjs';
+import { MatPaginator, MatDialog, MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiPostResponse } from '../api-post-response';
 import { EditContactDialog } from '../edit-contact-dialog/edit-contact-dialog';
+import { switchMap, startWith, map } from 'rxjs/operators';
+import { CommonResponse } from '../../Models/shared';
 
 @Component({
     selector: 'app-contacts-table',
     templateUrl: './contacts-table.component.html',
     styleUrls: ['./contacts-table.component.scss']
 })
-export class ContactsTableComponent implements OnInit, OnDestroy {
+export class ContactsTableComponent implements OnDestroy, AfterViewInit {
     constructor(private contactsService: ContactsService,
         private translate: TranslateService,
         public dialog: MatDialog,
@@ -25,22 +27,28 @@ export class ContactsTableComponent implements OnInit, OnDestroy {
     ready = false
 
     contactsServiceSubscription: Subscription
-    contacts: Contact[] = [];
-    displayedColumns: string[] = ['name', 'MLPS', 'TankTotalCapacity', 'TankRemainedCapacity'];
-    dataSource = new MatTableDataSource<Contact>(this.contacts);
+    displayedColumns: string[] = ['FirstName', 'LastName', 'PhoneNumber', 'EmailAddress'];
+    // dataSource = new MatTableDataSource<Contact>(this.contacts);
+    dataSource : Contact[] = [];
 
-    ngOnInit() {
-        this.dataSource.paginator = this.paginator
-        this.contactsService.fetchContacts()
-        this.contactsServiceSubscription = this.contactsService.contactsChanged.subscribe(
-            (contacts) => {
-                this.dataSource.data = contacts
-                this.ready = true
-                this.loading = false
-            }
+    ngAfterViewInit() {
+        this.contactsServiceSubscription = merge(this.paginator.page).pipe(
+            startWith({}),
+            switchMap(()=>{
+                this.loading = true
+                this.ready = false
+                return this.contactsService.fetchContacts({
+                    PageSize: this.paginator.pageSize,
+                    Page:this.paginator.pageIndex})
+            }),map((data: CommonResponse)=>{
+                this.loading = false;
+                this.ready = true;
+                this.resultsLength = data.Total;
+                return data.Data
+            })
         )
+        .subscribe(contacts => this.dataSource = contacts )
     }
-
 
     useLanguage(language: string) {
         this.translate.use(language);
@@ -71,7 +79,9 @@ export class ContactsTableComponent implements OnInit, OnDestroy {
                     (res: ApiPostResponse) => {
                         if (res.status == 1) {
                             this.openSnackBar("Saved successfully", "Got it!")
-                            this.contactsService.fetchContacts()
+                            this.contactsService.fetchContacts({
+                                PageSize:2,
+                                Page:2})
                             console.log(res)
                         } else {
                             this.openSnackBar("Unable to save", "Dismiss")

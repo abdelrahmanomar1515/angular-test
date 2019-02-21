@@ -1,6 +1,8 @@
 {
-    "table": {
-        "name": "Name",
-        "TotalTankCapacity": "Total Tank Capacity"
+    "contacts": {
+        "table": {
+            "FirstName": "First Name",
+            "PhoneNumber": "Phone Number"
+        }
     }
 }
