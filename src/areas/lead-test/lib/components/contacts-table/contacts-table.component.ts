@@ -28,7 +28,6 @@ export class ContactsTableComponent implements OnDestroy, AfterViewInit {
 
     contactsServiceSubscription: Subscription
     displayedColumns: string[] = ['FirstName', 'LastName', 'PhoneNumber', 'EmailAddress'];
-    // dataSource = new MatTableDataSource<Contact>(this.contacts);
     dataSource : Contact[] = [];
 
     ngAfterViewInit() {

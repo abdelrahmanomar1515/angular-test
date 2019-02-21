@@ -18,7 +18,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 import { AppRoutingModule } from './app-routing.module';
-import { ContactsModule } from 'areas/lead-test/lib/components/contacts.module';
+import { ContactsModule } from 'areas/lead-test/lib/contacts.module';
 
 
 
