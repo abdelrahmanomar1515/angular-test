@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Edit Contact</h1>
+<div mat-dialog-content class="dialog-container">
+  <p>Enter contact data to modify</p>
+  <mat-form-field>
+    <input matInput placeholder="ID" [(ngModel)]="data.contact.Id">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Name" [(ngModel)]="data.contact.Name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Tank Remained Capacity" [(ngModel)]="data.contact.TankRemainedCapacity">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Tank Total Capacity" [(ngModel)]="data.contact.TankTotalCapacity">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.contact" cdkFocusInitial>Ok</button>
+</div>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TestComponent } from 'areas/lead-test/lib/components/test/test.component';
+import { ContactsComponent } from 'areas/lead-test/lib/components/contacts.component';
 
 const routes: Routes = [
-  {path:'test', component:TestComponent}
+  {path:'contacts', component:ContactsComponent}
   ];
 
 @NgModule({

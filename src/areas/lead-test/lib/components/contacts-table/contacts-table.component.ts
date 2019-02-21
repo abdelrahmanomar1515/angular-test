@@ -1,21 +1,19 @@
 import { Component, OnInit, ViewChild, OnDestroy, Inject } from '@angular/core';
-import { Pump } from '../pump';
-import { PumpsService } from './pumps.service';
+import { Contact } from '../../Models/contact';
+import { ContactsService } from './contacts.service';
 import { Subscription } from 'rxjs';
-import { DataStorageService } from 'areas/lead-test/lib/components/test/data-storage.service';
 import { MatPaginator, MatTableDataSource, MatDialog, MatSnackBar } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { EditPumpDialog } from './edit-pump-dialog/edit-pump-dialog';
 import { ApiPostResponse } from '../api-post-response';
+import { EditContactDialog } from '../edit-contact-dialog/edit-contact-dialog';
 
 @Component({
-    selector: 'app-pumps-table',
-    templateUrl: './pumps-table.component.html',
-    styleUrls: ['./pumps-table.component.scss']
+    selector: 'app-contacts-table',
+    templateUrl: './contacts-table.component.html',
+    styleUrls: ['./contacts-table.component.scss']
 })
-export class PumpsTableComponent implements OnInit, OnDestroy {
-    constructor(private pumpsService: PumpsService,
-        private dataStorageService: DataStorageService,
+export class ContactsTableComponent implements OnInit, OnDestroy {
+    constructor(private contactsService: ContactsService,
         private translate: TranslateService,
         public dialog: MatDialog,
         private snackBar: MatSnackBar) {
@@ -26,17 +24,17 @@ export class PumpsTableComponent implements OnInit, OnDestroy {
     loading = true
     ready = false
 
-    pumpsServiceSubscription: Subscription
-    pumps: Pump[] = [];
+    contactsServiceSubscription: Subscription
+    contacts: Contact[] = [];
     displayedColumns: string[] = ['name', 'MLPS', 'TankTotalCapacity', 'TankRemainedCapacity'];
-    dataSource = new MatTableDataSource<Pump>(this.pumps);
+    dataSource = new MatTableDataSource<Contact>(this.contacts);
 
     ngOnInit() {
         this.dataSource.paginator = this.paginator
-        this.dataStorageService.fetchPumps()
-        this.pumpsServiceSubscription = this.pumpsService.pumpsChanged.subscribe(
-            (pumps) => {
-                this.dataSource.data = pumps
+        this.contactsService.fetchContacts()
+        this.contactsServiceSubscription = this.contactsService.contactsChanged.subscribe(
+            (contacts) => {
+                this.dataSource.data = contacts
                 this.ready = true
                 this.loading = false
             }
@@ -48,7 +46,7 @@ export class PumpsTableComponent implements OnInit, OnDestroy {
         this.translate.use(language);
     }
 
-    pumpData = {
+    contactData = {
         Id: '',
         Name: '',
         TankRemainedCapacity: 0,
@@ -56,24 +54,24 @@ export class PumpsTableComponent implements OnInit, OnDestroy {
 
     }
     openDialog(): void {
-        const dialogRef = this.dialog.open(EditPumpDialog, {
+        const dialogRef = this.dialog.open(EditContactDialog, {
             width: '550px',
-            data: { pump: this.pumpData }
+            data: { contact: this.contactData }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                const pumpData = {
+                const contactData = {
                     Id: <Number>result.Id,
                     Name: <String>result.Name,
                     TankRemainedCapacity: <Number>result.TankRemainedCapacity,
                     TankTotalCapacity: <Number>result.TankTotalCapacity
                 }
-                this.dataStorageService.savePump(pumpData).subscribe(
+                this.contactsService.saveContact(contactData).subscribe(
                     (res: ApiPostResponse) => {
                         if (res.status == 1) {
                             this.openSnackBar("Saved successfully", "Got it!")
-                            this.dataStorageService.fetchPumps()
+                            this.contactsService.fetchContacts()
                             console.log(res)
                         } else {
                             this.openSnackBar("Unable to save", "Dismiss")
@@ -91,7 +89,7 @@ export class PumpsTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.pumpsServiceSubscription.unsubscribe()
+        this.contactsServiceSubscription.unsubscribe()
     }
 }
 

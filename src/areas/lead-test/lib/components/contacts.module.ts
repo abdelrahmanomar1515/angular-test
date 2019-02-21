@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TestComponent } from './test.component';
-import { PumpsTableComponent} from './pumps-table/pumps-table.component';
+import { ContactsComponent } from './contacts.component';
+import { ContactsTableComponent} from './contacts-table/contacts-table.component';
 import { MatTableModule, MatProgressSpinnerModule, MatPaginatorModule, MatGridListModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { DataStorageService } from './data-storage.service';
-import { PumpsService } from './pumps-table/pumps.service';
+import { ContactsService } from './contacts-table/contacts.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { EditPumpDialog } from './pumps-table/edit-pump-dialog/edit-pump-dialog';
-import { TestRoutingModule } from './test-routing.module';
+import { EditContactDialog } from './edit-contact-dialog/edit-contact-dialog';
+import { ContactsRoutingModule } from './contacts-routing.module';
 
 @NgModule({
   imports: [
@@ -23,16 +22,16 @@ import { TestRoutingModule } from './test-routing.module';
     TranslateModule,
     MatButtonModule,
     MatDialogModule,
-    TestRoutingModule
+    ContactsRoutingModule
   ],
   entryComponents: [
-    EditPumpDialog
+    EditContactDialog
   ],
   declarations: [
-    TestComponent,
-    PumpsTableComponent,
-    EditPumpDialog
+    ContactsComponent,
+    ContactsTableComponent,
+    EditContactDialog
   ],
-  providers: [DataStorageService, PumpsService]
+  providers: [ContactsService]
 })
-export class TestModule { }
+export class ContactsModule { }

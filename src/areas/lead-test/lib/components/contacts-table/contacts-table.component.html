@@ -8,22 +8,22 @@
     
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>{{ 'table.name' | translate }}</th>
-                <td mat-cell *matCellDef="let pump"> {{pump.Name}} </td>
+                <td mat-cell *matCellDef="let contact"> {{contact.Name}} </td>
             </ng-container>
     
             <ng-container matColumnDef="MLPS">
                 <th mat-header-cell *matHeaderCellDef> MLPS </th>
-                <td mat-cell *matCellDef="let pump"> {{pump.MLPS}} </td>
+                <td mat-cell *matCellDef="let contact"> {{contact.MLPS}} </td>
             </ng-container>
     
             <ng-container matColumnDef="TankTotalCapacity">
                 <th mat-header-cell *matHeaderCellDef> {{'table.TotalTankCapacity' | translate}} </th>
-                <td mat-cell *matCellDef="let pump"> {{pump.TankTotalCapacity}} </td>
+                <td mat-cell *matCellDef="let contact"> {{contact.TankTotalCapacity}} </td>
             </ng-container>
     
             <ng-container matColumnDef="TankRemainedCapacity">
                 <th mat-header-cell *matHeaderCellDef> Tank Remained Capacity </th>
-                <td mat-cell *matCellDef="let pump"> {{pump.TankRemainedCapacity}} </td>
+                <td mat-cell *matCellDef="let contact"> {{contact.TankRemainedCapacity}} </td>
             </ng-container>
     
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -18,7 +18,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 import { AppRoutingModule } from './app-routing.module';
-import { TestModule } from 'areas/lead-test/lib/components/test/test.module';
+import { ContactsModule } from 'areas/lead-test/lib/components/contacts.module';
 
 
 
@@ -51,7 +51,7 @@ import { TestModule } from 'areas/lead-test/lib/components/test/test.module';
         // Material
         MatButtonModule,
         MatIconModule,
-        TestModule
+        ContactsModule
 
         , AppRoutingModule //routing module should be at end
 

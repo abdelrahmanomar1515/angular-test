@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
 
  export class CommonResponse{
-   Total:number;
+  Total:number;
   Status:number;
   Message:string;
   Data:any;
